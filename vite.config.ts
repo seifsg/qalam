@@ -1,7 +1,17 @@
-import { defineConfig } from 'vite'
+import { defineConfig, type Plugin } from 'vite'
 import { VitePWA } from 'vite-plugin-pwa'
 
 const PAPER = '#fff6e3'
+
+/** Only this site's own files may load or run: no trackers, ads or third-party calls by design. */
+const CSP = "default-src 'self'; base-uri 'none'; form-action 'none'; object-src 'none'"
+
+/** Adds the CSP to the built page only; the dev server needs Vite's inline style injection. */
+const csp = (): Plugin => ({
+  name: 'qalam-csp',
+  apply: 'build',
+  transformIndexHtml: () => [{ tag: 'meta', attrs: { 'http-equiv': 'Content-Security-Policy', content: CSP }, injectTo: 'head-prepend' }],
+})
 
 // Fixed ports so the dev and built previews never collide with sibling apps.
 // The PWA plugin precaches every built file, so the app installs and works offline after one visit.
@@ -10,6 +20,7 @@ export default defineConfig({
   preview: { port: 5188, strictPort: true },
   build: { target: 'es2022' },
   plugins: [
+    csp(),
     VitePWA({
       registerType: 'autoUpdate',
       injectRegister: 'script',
