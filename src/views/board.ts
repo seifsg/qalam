@@ -24,7 +24,8 @@ export function board(root: HTMLElement, set: CharSet, letter: Letter, glyph: Gl
   const at = list.indexOf(glyph)
   const next = list[at + 1]
   const pal = mascot()
-  const speak = (): void => say(letter.say, set.lang)
+  /** Say this letter's name (only when sound is on and a voice exists). */
+  const speak = (): void => say(letter.say, set.lang, signal)
   const host = h('div', { class: 'stage' }, pal)
 
   root.append(
@@ -38,11 +39,13 @@ export function board(root: HTMLElement, set: CharSet, letter: Letter, glyph: Gl
       step(set, next, 'Next letter', 'next')),
   )
 
-  const st = stage(host, glyph, set.lang, crayon(set.letters.indexOf(letter)))
+  const st = stage(host, glyph, set.lang, crayon(set.letters.indexOf(letter)), signal)
+  /** Show a mood on the pencil, then return to idle once its animation is done. */
   const mood = (m: 'oops' | 'happy'): void => {
     setMood(pal, m)
     later(m === 'happy' ? 1700 : 900, () => setMood(pal, 'idle'), signal)
   }
+  /** Letter finished: keep the best stars, cheer, then offer try again or next. */
   const win = (misses: number): void => {
     const n = stars(misses)
     record(glyph.id, n)

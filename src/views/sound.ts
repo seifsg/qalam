@@ -6,6 +6,7 @@ import { icon } from '../ui/icons.ts'
 
 /** Sound on/off switch (saved). Dimmed when the device has no voice for these languages. */
 export function soundButton(langs: readonly Lang[], signal: AbortSignal, onEnable?: () => void): HTMLButtonElement {
+  /** Redraw the icon, pressed state and hint from the saved setting and available voices. */
   const paint = (): void => {
     const on = soundOn()
     const mute = !langs.some(canSpeak)

@@ -11,11 +11,12 @@ const voice = (lang: Lang): SpeechSynthesisVoice | undefined =>
 /** The device can say names in this language. */
 export const canSpeak = (lang: Lang): boolean => !!voice(lang)
 
-/** Say a letter name in its language when sound is on and the device has that voice. */
-export function say(text: string, lang: Lang): void {
+/** Say a letter name in its language when sound is on and the device has that voice; tied to the screen's signal. */
+export function say(text: string, lang: Lang, signal: AbortSignal): void {
   const s = synth()
   if (!s || !soundOn()) return
-  if (!s.getVoices().length) return s.addEventListener('voiceschanged', () => say(text, lang), { once: true })
+  if (signal.aborted) return
+  if (!s.getVoices().length) return s.addEventListener('voiceschanged', () => say(text, lang, signal), { once: true, signal })
   const v = voice(lang)
   if (!v) return
   s.cancel()

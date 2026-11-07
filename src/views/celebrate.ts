@@ -28,8 +28,13 @@ export function celebrate(root: HTMLElement, n: 1 | 2 | 3, next: string, dir: st
       h('div', { class: 'win-stars' }, ...[1, 2, 3].map((j) => star(`win-star${j <= n ? ' on' : ''}`))),
       h('p', { class: 'win-word' }, WORDS[n]),
       h('div', { class: 'win-actions', dir },
-        button('Try again', 'btn btn-big', () => (dlg.remove(), again()), signal, icon('again')),
+        button('Try again', 'btn btn-big', () => (dlg.remove(), behind(false), again()), signal, icon('again')),
         go)))
+  /** Keep focus and taps in the card: everything behind it goes inert until "Try again". */
+  const behind = (on: boolean): void => {
+    for (const el of root.children) if (el !== dlg) el.toggleAttribute('inert', on)
+  }
+  behind(true)
   root.append(dlg)
   go.focus()
 }

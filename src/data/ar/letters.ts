@@ -47,6 +47,7 @@ const spread = ([x, y]: Pt, n: 1 | 2 | 3): Pt[] =>
 const label = (c: string, f: Form): string =>
   f === 'init' ? c + TATWEEL : f === 'med' ? TATWEEL + c + TATWEEL : f === 'fin' ? TATWEEL + c : c
 
+/** One Arabic letter: a glyph per form its family has, dots placed from the body's anchors. */
 function letter([id, char, say, forms, dots]: Row): Letter {
   const glyphs = FORMS.flatMap((form): Glyph[] => {
     const body = forms[form]

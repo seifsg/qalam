@@ -20,5 +20,6 @@ export const icon = (name: IconName, cls = ''): SVGSVGElement =>
 /** Five-point star in a 24 box, used for scores and confetti. */
 export const STAR = 'M12 2 L14.9 8.6 L22 9.3 L16.6 14 L18.2 21 L12 17.3 L5.8 21 L7.4 14 L2 9.3 L9.1 8.6 Z'
 
+/** Star icon with a class: score stars, tile stars and confetti share it. */
 export const star = (cls: string): SVGSVGElement =>
   s('svg', { viewBox: '0 0 24 24', class: cls, 'aria-hidden': 'true' }, s('path', { d: STAR }))
