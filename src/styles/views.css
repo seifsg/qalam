@@ -312,3 +312,55 @@ circle.track {
   width: 20px;
   height: 20px;
 }
+
+/* Arabic forms strip */
+.forms {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  padding: 0 16px 10px;
+}
+
+.form-chip {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 64px;
+  height: 64px;
+  padding: 6px;
+  border-radius: 18px;
+  background: var(--card);
+  box-shadow: 0 4px 0 var(--edge);
+  opacity: 0.75;
+}
+
+.form-chip[aria-current='page'] {
+  opacity: 1;
+  outline: 4px solid var(--c, var(--sky));
+  outline-offset: 2px;
+}
+
+.form-chip.done::after {
+  content: '';
+  position: absolute;
+  top: -5px;
+  inset-inline-end: -5px;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: var(--gold);
+  box-shadow: 0 0 0 3px var(--paper);
+}
+
+.form-chip .glyph {
+  width: 100%;
+  height: 100%;
+}
+
+.form-chip .glyph path {
+  stroke: var(--ink);
+}
+
+.form-chip .glyph circle {
+  fill: var(--ink);
+}

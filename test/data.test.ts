@@ -25,4 +25,9 @@ test('sets hold the full alphabets', () => {
   const count = Object.fromEntries(SETS.map((s) => [s.id, s.letters.length]))
   assert.equal(count.upper, 26)
   assert.equal(count.lower, 26)
+  assert.equal(count.ar, 28)
+  const ar = SETS.find((s) => s.id === 'ar')?.letters ?? []
+  assert.equal(ar.map((l) => l.char).join(''), 'ابتثجحخدذرزسشصضطظعغفقكلمنهوي', 'alphabet order')
+  const twoForms = new Set(['alif', 'dal', 'dhal', 'ra', 'zay', 'waw'])
+  for (const l of ar) assert.equal(l.glyphs.length, twoForms.has(l.id) ? 2 : 4, `${l.id} forms`)
 })

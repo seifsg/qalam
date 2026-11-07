@@ -8,6 +8,7 @@ import { icon, type IconName } from '../ui/icons.ts'
 import { mascot, setMood } from '../ui/mascot.ts'
 import { bar } from './bar.ts'
 import { celebrate } from './celebrate.ts'
+import { forms } from './forms.ts'
 import { stage } from './stage.ts'
 import { tracer } from './tracer.ts'
 
@@ -24,7 +25,8 @@ export function board(root: HTMLElement, set: CharSet, letter: Letter, glyph: Gl
   const host = h('div', { class: 'stage' }, pal)
 
   root.append(
-    bar(href(set), h('span', { class: 'bar-letter', lang: set.lang, dir: set.dir }, letter.char, letter.say === letter.char ? '' : h('small', {}, letter.say))),
+    bar(href(set), h('span', { class: 'bar-letter', lang: set.lang, dir: set.dir }, glyph.char, letter.say === letter.char ? '' : h('small', {}, letter.say))),
+    forms(set, letter, glyph),
     host,
     h('nav', { class: 'controls', dir: set.dir },
       step(set, list[at - 1], 'Previous letter', 'back'),
