@@ -18,6 +18,7 @@ export interface Trace {
 export type Press = 'go' | 'hint' | 'done'
 export type Step = 'ok' | 'miss' | 'done'
 
+/** Squared distance: comparisons need no square root. */
 const d2 = (a: Pt, b: Pt): number => (a[0] - b[0]) ** 2 + (a[1] - b[1]) ** 2
 
 /** Squared distance from p to segment ab. */
@@ -29,7 +30,9 @@ function segD2(p: Pt, a: Pt, b: Pt): number {
   return d2(p, [a[0] + t * dx, a[1] + t * dy])
 }
 
+/** Index of the stroke's final checkpoint. */
 const last = (t: Trace): number => t.pts.length - 1
+/** The finger is within the trace's radius of checkpoint j. */
 const hits = (t: Trace, j: number, p: Pt): boolean => d2(p, t.pts[j]!) <= t.r * t.r
 
 /** New trace over ordered checkpoints. A single point is a dot: bigger target, tap to pass. */

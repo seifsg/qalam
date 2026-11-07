@@ -17,7 +17,9 @@ export interface Stage extends Painter {
   stop(): void
 }
 
+/** Pause the demo between strokes. */
 const wait = (ms: number): Promise<void> => new Promise((r) => setTimeout(r, ms))
+/** The device asks for less motion: skip the demo animation. */
 const reduced = (): boolean => matchMedia('(prefers-reduced-motion: reduce)').matches
 
 /** The tracing paper: track, finished ink, live fill, start marker, finger. Mounted into `host`. */
@@ -40,6 +42,7 @@ export function stage(host: Element, g: Glyph, lang: Lang, color: string): Stage
   let len = 0
   let demo = 0
 
+  /** Put the numbered start dot at p with its arrow pointing toward `to`. */
   const place = (p: Pt, to: Pt, n: number): void => {
     mark.setAttribute('transform', `translate(${p[0]} ${p[1]})`)
     arrow.setAttribute('transform', `rotate(${(Math.atan2(to[1] - p[1], to[0] - p[0]) * 180) / Math.PI}) translate(10 0)`)

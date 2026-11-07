@@ -36,6 +36,7 @@ export function tracer(
   let k = 0
   let down = false
 
+  /** Start over at the first stroke (open, "Show me", "Try again"). */
   const reset = (): void => {
     traces = items.map(start)
     k = 0
@@ -43,11 +44,13 @@ export function tracer(
     paint.active(0)
   }
 
+  /** Finger up: the stroke pauses where it is. */
   const lift = (): void => {
     down = false
     paint.finger(null)
   }
 
+  /** Stroke done: ink it, then the next stroke or the win. */
   const advance = (): void => {
     paint.finish(k)
     lift()
@@ -74,18 +77,19 @@ export function tracer(
     const t = traces[k]
     if (!down || !e.isPrimary || !t) return
     const batch = e.getCoalescedEvents?.() ?? []
+    let p: Pt | null = null
     for (const ev of batch.length ? batch : [e]) {
-      const p = toBox(svg, ev)
-      if (!p) continue
-      paint.finger(p)
-      const step = drag(t, p)
-      paint.fill(progress(t))
+      p = toBox(svg, ev) ?? p
+      const step = p ? drag(t, p) : 'ok'
       if (step === 'done') return advance()
       if (step === 'miss') {
         lift()
         return paint.miss()
       }
     }
+    // Match every coalesced point, but draw once per event.
+    paint.finger(p)
+    paint.fill(progress(t))
   }, { signal })
 
   for (const type of ['pointerup', 'pointercancel', 'lostpointercapture'] as const) {

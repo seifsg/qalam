@@ -16,4 +16,5 @@ export const SETS: readonly CharSet[] = [
   { id: 'lower', dir: 'ltr', lang: 'en', title: 'abc', letters: LOWER.map((row) => latin('lower', row, LOWER_DOTS[row[0] ?? ''])) },
 ]
 
+/** Set by its route id, or undefined for an unknown id. */
 export const findSet = (id: string): CharSet | undefined => SETS.find((s) => s.id === id)

@@ -21,7 +21,7 @@ function render(): void {
   if (route.view === 'home') home(app, screen.signal)
   else if (route.view === 'grid') grid(app, route.set, screen.signal)
   else board(app, route.set, route.letter, route.glyph, screen.signal)
-  document.title = route.view === 'board' ? `${route.letter.char} · Qalam` : 'Qalam'
+  document.title = route.view === 'home' ? 'Qalam' : `${route.view === 'board' ? route.letter.char : route.set.title} · Qalam`
   scrollTo(0, 0)
 }
 

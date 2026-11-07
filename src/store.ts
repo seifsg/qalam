@@ -29,6 +29,7 @@ function normalize(raw: unknown): Saved {
   return { stars, sound: o.sound !== false }
 }
 
+/** Read saved progress once at startup; unreadable data starts fresh, loudly. */
 function load(store: Storage | null): Saved {
   try {
     return normalize(JSON.parse(store?.getItem(KEY) ?? '{}'))
@@ -41,6 +42,7 @@ function load(store: Storage | null): Saved {
 const store = disk()
 const data = load(store)
 
+/** Write progress; a full or blocked store logs and keeps the in-memory copy. */
 function save(): void {
   try {
     store?.setItem(KEY, JSON.stringify(data))
@@ -59,8 +61,10 @@ export function record(id: string, n: Stars): void {
   save()
 }
 
+/** Whether letter names are spoken. */
 export const soundOn = (): boolean => data.sound
 
+/** Switch letter names on or off and remember it. */
 export function setSound(on: boolean): void {
   data.sound = on
   save()

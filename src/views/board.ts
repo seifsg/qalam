@@ -41,7 +41,7 @@ export function board(root: HTMLElement, set: CharSet, letter: Letter, glyph: Gl
   const st = stage(host, glyph, set.lang, crayon(set.letters.indexOf(letter)))
   const mood = (m: 'oops' | 'happy'): void => {
     setMood(pal, m)
-    later(900, () => setMood(pal, 'idle'), signal)
+    later(m === 'happy' ? 1700 : 900, () => setMood(pal, 'idle'), signal)
   }
   const win = (misses: number): void => {
     const n = stars(misses)

@@ -3,6 +3,7 @@ type Attrs = Readonly<Record<string, string | number>>
 
 const SVG_NS = 'http://www.w3.org/2000/svg'
 
+/** Set attributes and append children; shared by `h` and `s`. */
 function fill<E extends Element>(el: E, attrs: Attrs, kids: readonly Kid[]): E {
   for (const [k, v] of Object.entries(attrs)) el.setAttribute(k, String(v))
   el.append(...kids)
