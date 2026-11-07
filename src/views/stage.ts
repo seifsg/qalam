@@ -33,8 +33,8 @@ export function stage(host: Element, g: Glyph, lang: Lang, color: string): Stage
   const arrow = s('path', { class: 'start-arrow', d: 'M-2.6 -3.4 L2.4 0 L-2.6 3.4' })
   const mark = s('g', { class: 'start' }, s('circle', { class: 'start-dot', r: 6 }), num, arrow)
   const finger = s('circle', { class: 'finger hidden', r: 5 })
-  const svg = s('svg', { viewBox: '-4 -4 108 108', class: `paper ${color}`, role: 'img', 'aria-label': `Trace ${g.char}` },
-    ...RULES[lang].map(([y, cls]) => s('line', { x1: -4, x2: 104, y1: y, y2: y, class: cls })),
+  const svg = s('svg', { viewBox: '-6 -6 112 112', class: `paper ${color}`, role: 'img', 'aria-label': `Trace ${g.char}` },
+    ...RULES[lang].map(([y, cls]) => s('line', { x1: -6, x2: 106, y1: y, y2: y, class: cls })),
     ...strokes, ...dots, ink, fill, guide, mark, finger)
   host.append(svg)
 

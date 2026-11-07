@@ -28,7 +28,7 @@ export function board(root: HTMLElement, set: CharSet, letter: Letter, glyph: Gl
   const host = h('div', { class: 'stage' }, pal)
 
   root.append(
-    bar(href(set), h('span', { class: 'bar-letter', lang: set.lang, dir: set.dir }, glyph.char, letter.say === letter.char ? '' : h('small', {}, letter.say)),
+    bar(href(set), h('span', { class: 'bar-letter', lang: set.lang, dir: set.dir }, glyph.char, letter.say.toLowerCase() === letter.char.toLowerCase() ? '' : h('small', {}, letter.say)),
       soundButton([set.lang], signal, speak)),
     forms(set, letter, glyph),
     host,
