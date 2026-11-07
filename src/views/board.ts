@@ -1,4 +1,5 @@
 import { href, order } from '../router.ts'
+import { record } from '../store.ts'
 import { stars } from '../trace/matcher.ts'
 import type { CharSet, Glyph, Letter } from '../types.ts'
 import { button, h, later, link } from '../ui/dom.ts'
@@ -37,8 +38,10 @@ export function board(root: HTMLElement, set: CharSet, letter: Letter, glyph: Gl
     later(900, () => setMood(pal, 'idle'), signal)
   }
   const win = (misses: number): void => {
+    const n = stars(misses)
+    record(glyph.id, n)
     mood('happy')
-    celebrate(root, stars(misses), next ? href(set, next) : href(set), set.dir, () => tr.reset(), signal)
+    celebrate(root, n, next ? href(set, next) : href(set), set.dir, () => tr.reset(), signal)
   }
   const tr = tracer(st.svg, st.items, { ...st, miss: () => (st.miss(), mood('oops')) }, win, signal, st.stop)
   void st.play()
