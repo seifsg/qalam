@@ -1,0 +1,444 @@
+/* Home */
+.hero {
+  text-align: center;
+  padding: 28px 16px 4px;
+}
+
+.hero .mascot {
+  width: clamp(76px, 13vh, 136px);
+  height: auto;
+  aspect-ratio: 120 / 140;
+}
+
+.logo {
+  display: flex;
+  justify-content: center;
+  align-items: baseline;
+  gap: 0.3em;
+  margin: 4px 0 0;
+  font: 900 clamp(2.6rem, 10vw, 4.2rem) / 1 var(--font);
+  letter-spacing: -0.02em;
+}
+
+.logo-ar {
+  color: var(--tomato);
+}
+
+.tagline {
+  margin: 6px 0 0;
+  color: var(--soft);
+  font-size: 1.1rem;
+}
+
+.sets {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 22px;
+  max-width: 940px;
+  margin: 0 auto;
+  padding: 20px 16px;
+}
+
+.set-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  min-height: 200px;
+  padding: 22px 16px;
+  border-radius: 32px;
+  background: var(--c);
+  color: #fff;
+  text-decoration: none;
+  box-shadow: 0 7px 0 color-mix(in srgb, var(--c) 62%, #000), 0 14px 26px var(--shadow);
+  transition: transform 0.1s, box-shadow 0.1s;
+}
+
+.set-card:active {
+  transform: translateY(5px);
+  box-shadow: 0 2px 0 color-mix(in srgb, var(--c) 62%, #000), 0 6px 12px var(--shadow);
+}
+
+.set-title {
+  font-size: 3rem;
+  font-weight: 900;
+  line-height: 1.1;
+}
+
+.set-peek {
+  display: flex;
+  gap: 8px;
+}
+
+.set-peek .glyph {
+  width: 60px;
+  height: 60px;
+  padding: 5px;
+  border-radius: 16px;
+  background: var(--paper-2);
+}
+
+.trust {
+  margin: 0;
+  padding: 8px 16px 32px;
+  text-align: center;
+  color: var(--soft);
+}
+
+/* Shared glyph drawing (tiles, cards) */
+.glyph path {
+  fill: none;
+  stroke: var(--c);
+  stroke-width: 9;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.glyph circle {
+  fill: var(--c);
+}
+
+/* Grid */
+.tiles {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(108px, 1fr));
+  gap: 18px;
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 8px 16px 32px;
+  list-style: none;
+}
+
+.tile {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  aspect-ratio: 1 / 1.12;
+  padding: 10px 8px 8px;
+  border-radius: 24px;
+  background: var(--card);
+  text-decoration: none;
+  box-shadow: 0 5px 0 var(--edge), 0 9px 18px var(--shadow);
+  transition: transform 0.08s, box-shadow 0.08s;
+}
+
+.tile:active {
+  transform: translateY(4px);
+  box-shadow: 0 1px 0 var(--edge), 0 3px 8px var(--shadow);
+}
+
+.tile .glyph {
+  flex: 1;
+  width: 100%;
+  min-height: 0;
+}
+
+.tile-stars {
+  display: flex;
+  gap: 2px;
+  height: 18px;
+}
+
+.mini-star {
+  width: 22px;
+  height: 22px;
+  fill: var(--track);
+}
+
+.mini-star.on {
+  fill: var(--gold);
+}
+
+/* Board */
+[data-view='board'] {
+  display: flex;
+  flex-direction: column;
+  height: 100dvh;
+}
+
+/* The paper takes all the room the screen has left, as a square. */
+.stage-wrap {
+  flex: 1;
+  min-height: 0;
+  display: grid;
+  place-items: center;
+  padding: 4px 16px;
+  container-type: size;
+}
+
+.bar-letter {
+  font-size: 2.2rem;
+}
+
+.bar-letter small {
+  margin-inline-start: 0.45em;
+  color: var(--soft);
+  font-size: 1.2rem;
+}
+
+/* Arabic letters run small at the same size, so the board title grows for them. */
+.bar-letter[lang='ar'] {
+  font-size: 2.9rem;
+  line-height: 1.2;
+}
+
+.bar-letter[lang='ar'] small {
+  font-size: 1.5rem;
+}
+
+.stage {
+  position: relative;
+  width: min(100cqw, 100cqh, 820px);
+  aspect-ratio: 1;
+  border-radius: 32px;
+  background: var(--paper-2);
+  box-shadow: 0 6px 0 var(--edge), 0 16px 34px var(--shadow);
+}
+
+.stage > .mascot {
+  position: absolute;
+  inset-inline-end: -8px;
+  bottom: -14px;
+  width: clamp(54px, 12cqmin, 84px);
+  height: auto;
+  aspect-ratio: 120 / 140;
+  pointer-events: none;
+}
+
+.paper {
+  -webkit-touch-callout: none;
+  display: block;
+  width: 100%;
+  height: 100%;
+  touch-action: none;
+  cursor: crosshair;
+}
+
+.paper .rule {
+  stroke: var(--line-strong);
+  stroke-width: 0.5;
+}
+
+.paper .rule.mid {
+  stroke-dasharray: 2 2;
+}
+
+.paper .rule.base {
+  stroke-width: 0.9;
+}
+
+.track {
+  fill: none;
+  stroke: var(--track);
+  stroke-width: 14;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+circle.track {
+  fill: var(--track);
+  stroke: none;
+}
+
+.ink path,
+.live {
+  fill: none;
+  stroke: var(--c);
+  stroke-width: 9;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.live {
+  transition: stroke-dashoffset 90ms linear;
+}
+
+.ink circle {
+  fill: var(--c);
+}
+
+.guide {
+  fill: none;
+  stroke: var(--guide);
+  stroke-width: 0.9;
+  stroke-dasharray: 2.2 2.6;
+  stroke-linecap: round;
+}
+
+.start-dot {
+  fill: var(--c);
+  stroke: var(--paper-2);
+  stroke-width: 1.4;
+}
+
+.start-num {
+  fill: #fff;
+  font: 900 6.5px var(--font);
+  pointer-events: none;
+}
+
+.start-arrow {
+  fill: none;
+  stroke: var(--c);
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.finger {
+  fill: var(--c);
+  opacity: 0.3;
+  pointer-events: none;
+}
+
+.demo .start,
+.demo .guide {
+  opacity: 0.35;
+}
+
+.controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 18px;
+  padding: 14px 16px max(20px, env(safe-area-inset-bottom));
+}
+
+/* Progress marks */
+.tile-forms {
+  display: flex;
+  gap: 5px;
+  height: 18px;
+  align-items: center;
+}
+
+.form-dot {
+  width: 13px;
+  height: 13px;
+  border-radius: 50%;
+  background: var(--track);
+}
+
+.form-dot.on {
+  background: var(--gold);
+}
+
+.set-score {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 12px 4px 8px;
+  border-radius: 999px;
+  background: rgb(0 0 0 / 0.16);
+  font-size: 1rem;
+}
+
+.set-score .mini-star {
+  width: 20px;
+  height: 20px;
+}
+
+/* Arabic forms strip */
+.forms {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  padding: 0 16px 10px;
+}
+
+.form-chip {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 64px;
+  height: 64px;
+  padding: 6px;
+  border-radius: 18px;
+  background: var(--card);
+  box-shadow: 0 4px 0 var(--edge);
+  opacity: 0.75;
+}
+
+.form-chip[aria-current='page'] {
+  opacity: 1;
+  outline: 4px solid var(--c, var(--sky));
+  outline-offset: 2px;
+}
+
+.form-chip.done::after {
+  content: '';
+  position: absolute;
+  top: -5px;
+  inset-inline-end: -5px;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: var(--gold);
+  box-shadow: 0 0 0 3px var(--paper);
+}
+
+.form-chip .glyph {
+  width: 100%;
+  height: 100%;
+}
+
+.form-chip .glyph path {
+  stroke: var(--ink);
+}
+
+.form-chip .glyph circle {
+  fill: var(--ink);
+}
+
+/* Phones: set cards turn into wide rows so all three fit on one screen. */
+@media (max-width: 560px) {
+  .sets {
+    gap: 14px;
+    padding-top: 12px;
+  }
+
+  .set-card {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    grid-template-areas: 'title peek' 'score peek';
+    justify-items: start;
+    min-height: 0;
+    padding: 14px 18px;
+    row-gap: 6px;
+  }
+
+  .set-title {
+    grid-area: title;
+    font-size: 2.3rem;
+  }
+
+  .set-peek {
+    grid-area: peek;
+  }
+
+  .set-peek .glyph {
+    width: 46px;
+    height: 46px;
+  }
+
+  .set-score {
+    grid-area: score;
+  }
+
+  .hero {
+    padding-top: 0;
+  }
+
+  .tiles {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+  }
+}
+
+/* Chalk crayons are light in dark mode, so text on them turns dark for contrast. */
+@media (prefers-color-scheme: dark) {
+  .set-card,
+  .go {
+    color: #14201a;
+  }
+}

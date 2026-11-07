@@ -1,0 +1,178 @@
+/* Mascot: Qalam the pencil */
+.mascot {
+  overflow: visible;
+}
+
+.m-eraser { fill: #f48fb1; }
+.m-band { fill: #c7ccd6; }
+.m-body { fill: #ffcc3a; }
+.m-facet { fill: #ffdd75; }
+.m-wood { fill: #f2c896; }
+.m-lead { fill: #3b3c55; }
+.m-eye { fill: #2a2b45; }
+.m-cheek { fill: #ff9db8; opacity: 0.75; }
+
+.m-mouth {
+  fill: none;
+  stroke: #2a2b45;
+  stroke-width: 3;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.m-happy { fill: #b23a48; }
+
+.m-arm {
+  fill: none;
+  stroke: #2a2b45;
+  stroke-width: 4.5;
+  stroke-linecap: round;
+  transform-box: fill-box;
+  transition: transform 0.3s;
+}
+
+.m-arm-l { transform-origin: 100% 0; }
+.m-arm-r { transform-origin: 0 0; }
+
+.mascot[data-mood='idle'] .m-happy,
+.mascot[data-mood='idle'] .m-oops,
+.mascot[data-mood='happy'] .m-idle,
+.mascot[data-mood='happy'] .m-oops,
+.mascot[data-mood='oops'] .m-idle,
+.mascot[data-mood='oops'] .m-happy {
+  display: none;
+}
+
+.mascot[data-mood='idle'] { animation: bob 3s ease-in-out infinite; }
+.mascot[data-mood='happy'] { animation: jump 0.55s ease-in-out 3; }
+.mascot[data-mood='happy'] .m-arm-l { transform: rotate(40deg); }
+.mascot[data-mood='happy'] .m-arm-r { transform: rotate(-40deg); }
+.mascot[data-mood='oops'] { animation: tilt 0.5s ease-in-out; }
+
+@keyframes bob { 50% { transform: translateY(-4px); } }
+@keyframes jump { 40% { transform: translateY(-14px) rotate(-4deg); } 70% { transform: translateY(0) rotate(3deg); } }
+@keyframes tilt { 25% { transform: rotate(-9deg); } 75% { transform: rotate(7deg); } }
+
+/* Board feedback */
+.start-dot { animation: pulse 1.4s ease-in-out infinite; transform-box: fill-box; transform-origin: center; }
+.nudge .start-dot { animation: nudge 0.5s ease-out 2; }
+.wobble { animation: wobble 0.4s ease-in-out; }
+.ink .pop { animation: pop 0.35s cubic-bezier(0.2, 1.6, 0.4, 1); transform-box: fill-box; transform-origin: center; }
+
+@keyframes pulse { 50% { transform: scale(1.18); } }
+@keyframes nudge { 50% { transform: scale(1.6); } }
+@keyframes wobble { 25% { transform: translateX(-6px); } 75% { transform: translateX(6px); } }
+@keyframes pop { from { transform: scale(0); } }
+
+/* Celebration */
+.win {
+  position: fixed;
+  inset: 0;
+  z-index: 10;
+  display: grid;
+  place-items: center;
+  padding: 16px;
+  background: color-mix(in srgb, var(--paper) 72%, transparent);
+  backdrop-filter: blur(3px);
+  animation: fade 0.25s ease-out;
+}
+
+.win-card {
+  position: relative;
+  width: min(92vw, 380px);
+  padding: 8px 20px 24px;
+  border-radius: 34px;
+  background: var(--card);
+  text-align: center;
+  box-shadow: 0 8px 0 var(--edge), 0 22px 44px var(--shadow);
+  animation: rise 0.5s cubic-bezier(0.2, 1.4, 0.4, 1);
+}
+
+.win-card .mascot {
+  width: 96px;
+  height: 112px;
+  margin-top: -64px;
+}
+
+.win-stars {
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  gap: 4px;
+}
+
+.win-star {
+  width: 76px;
+  height: 76px;
+  fill: var(--track);
+}
+
+.win-star:nth-child(2) {
+  width: 92px;
+  height: 92px;
+  margin-bottom: 12px;
+}
+
+.win-star.on {
+  fill: var(--gold);
+  stroke: var(--gold-edge);
+  stroke-width: 1.2;
+  stroke-linejoin: round;
+  animation: star-pop 0.55s cubic-bezier(0.2, 1.7, 0.4, 1) both;
+}
+
+.win-star.on:nth-child(2) { animation-delay: 0.2s; }
+.win-star.on:nth-child(3) { animation-delay: 0.4s; }
+
+.win-word {
+  margin: 6px 0 18px;
+  font: 900 2rem/1.1 var(--font);
+}
+
+.win-actions {
+  display: flex;
+  justify-content: center;
+  gap: 14px;
+}
+
+.confetti {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.confetto {
+  position: absolute;
+  left: 50%;
+  top: 42%;
+  width: 24px;
+  height: 24px;
+  fill: var(--cc);
+  opacity: 0;
+  animation: burst 1.3s cubic-bezier(0.15, 0.7, 0.3, 1) 0.15s forwards;
+}
+
+@keyframes fade { from { opacity: 0; } }
+@keyframes rise { from { transform: translateY(40px) scale(0.9); opacity: 0; } }
+@keyframes star-pop { from { transform: scale(0) rotate(-40deg); } }
+@keyframes burst {
+  0% { transform: translate(-50%, -50%) scale(0.3); opacity: 1; }
+  80% { opacity: 1; }
+  100% { transform: translate(calc(-50% + var(--dx)), calc(-50% + var(--dy))) scale(1) rotate(var(--rot)); opacity: 0; }
+}
+
+/* Calm version for kids and parents who turn motion down */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+
+  .confetti {
+    display: none;
+  }
+}

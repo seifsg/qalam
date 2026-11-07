@@ -1,0 +1,27 @@
+{
+  "name": "qalam",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Kids trace Arabic and English letters with a finger or mouse.",
+  "license": "UNLICENSED",
+  "type": "module",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/seifsg/qalam.git"
+  },
+  "engines": {
+    "node": ">=22.18"
+  },
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview",
+    "test": "node --test test/*.test.ts"
+  },
+  "devDependencies": {
+    "@types/node": "24.19.2",
+    "typescript": "7.0.2",
+    "vite": "8.3.5",
+    "vite-plugin-pwa": "2.0.0"
+  }
+}
