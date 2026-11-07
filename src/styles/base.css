@@ -188,15 +188,3 @@ a:focus-visible {
 .sound[aria-pressed='true'] {
   color: var(--sky);
 }
-
-/* Chalk crayons are light, so text on them turns dark for contrast. */
-@media (prefers-color-scheme: dark) {
-  .set-card,
-  .go {
-    color: #14201a;
-  }
-
-  .set-score {
-    background: rgb(0 0 0 / 0.12);
-  }
-}

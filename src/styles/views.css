@@ -424,3 +424,11 @@ circle.track {
     gap: 12px;
   }
 }
+
+/* Chalk crayons are light in dark mode, so text on them turns dark for contrast. */
+@media (prefers-color-scheme: dark) {
+  .set-card,
+  .go {
+    color: #14201a;
+  }
+}
