@@ -5,8 +5,9 @@
 }
 
 .hero .mascot {
-  width: 104px;
-  height: 120px;
+  width: clamp(76px, 13vh, 136px);
+  height: auto;
+  aspect-ratio: 120 / 140;
 }
 
 .logo {
@@ -31,9 +32,9 @@
 
 .sets {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
-  gap: 20px;
-  max-width: 760px;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 22px;
+  max-width: 940px;
   margin: 0 auto;
   padding: 20px 16px;
 }
@@ -43,9 +44,9 @@
   flex-direction: column;
   align-items: center;
   gap: 12px;
-  min-height: 160px;
-  padding: 20px 16px;
-  border-radius: 30px;
+  min-height: 200px;
+  padding: 22px 16px;
+  border-radius: 32px;
   background: var(--c);
   color: #fff;
   text-decoration: none;
@@ -59,7 +60,7 @@
 }
 
 .set-title {
-  font-size: 2.6rem;
+  font-size: 3rem;
   font-weight: 900;
   line-height: 1.1;
 }
@@ -70,8 +71,8 @@
 }
 
 .set-peek .glyph {
-  width: 52px;
-  height: 52px;
+  width: 60px;
+  height: 60px;
   padding: 5px;
   border-radius: 16px;
   background: var(--paper-2);
@@ -100,9 +101,9 @@
 /* Grid */
 .tiles {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(88px, 1fr));
-  gap: 16px;
-  max-width: 960px;
+  grid-template-columns: repeat(auto-fill, minmax(108px, 1fr));
+  gap: 18px;
+  max-width: 1120px;
   margin: 0 auto;
   padding: 8px 16px 32px;
   list-style: none;
@@ -139,8 +140,8 @@
 }
 
 .mini-star {
-  width: 18px;
-  height: 18px;
+  width: 22px;
+  height: 22px;
   fill: var(--track);
 }
 
@@ -152,7 +153,17 @@
 [data-view='board'] {
   display: flex;
   flex-direction: column;
-  min-height: 100dvh;
+  height: 100dvh;
+}
+
+/* The paper takes all the room the screen has left, as a square. */
+.stage-wrap {
+  flex: 1;
+  min-height: 0;
+  display: grid;
+  place-items: center;
+  padding: 4px 16px;
+  container-type: size;
 }
 
 .bar-letter {
@@ -167,9 +178,8 @@
 
 .stage {
   position: relative;
-  width: min(94vw, 64dvh, 580px);
+  width: min(100cqw, 100cqh, 820px);
   aspect-ratio: 1;
-  margin: 4px auto 0;
   border-radius: 32px;
   background: var(--paper-2);
   box-shadow: 0 6px 0 var(--edge), 0 16px 34px var(--shadow);
@@ -179,8 +189,9 @@
   position: absolute;
   inset-inline-end: -8px;
   bottom: -14px;
-  width: 62px;
-  height: 72px;
+  width: clamp(54px, 12cqmin, 84px);
+  height: auto;
+  aspect-ratio: 120 / 140;
   pointer-events: none;
 }
 
@@ -280,7 +291,7 @@ circle.track {
   align-items: center;
   justify-content: center;
   gap: 18px;
-  padding: 22px 16px 28px;
+  padding: 14px 16px max(20px, env(safe-area-inset-bottom));
 }
 
 /* Progress marks */
@@ -292,8 +303,8 @@ circle.track {
 }
 
 .form-dot {
-  width: 11px;
-  height: 11px;
+  width: 13px;
+  height: 13px;
   border-radius: 50%;
   background: var(--track);
 }
@@ -367,4 +378,49 @@ circle.track {
 
 .form-chip .glyph circle {
   fill: var(--ink);
+}
+
+/* Phones: set cards turn into wide rows so all three fit on one screen. */
+@media (max-width: 560px) {
+  .sets {
+    gap: 14px;
+    padding-top: 12px;
+  }
+
+  .set-card {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    grid-template-areas: 'title peek' 'score peek';
+    justify-items: start;
+    min-height: 0;
+    padding: 14px 18px;
+    row-gap: 6px;
+  }
+
+  .set-title {
+    grid-area: title;
+    font-size: 2.3rem;
+  }
+
+  .set-peek {
+    grid-area: peek;
+  }
+
+  .set-peek .glyph {
+    width: 46px;
+    height: 46px;
+  }
+
+  .set-score {
+    grid-area: score;
+  }
+
+  .hero {
+    padding-top: 0;
+  }
+
+  .tiles {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+  }
 }

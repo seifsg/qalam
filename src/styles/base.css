@@ -29,14 +29,14 @@
   :root {
     --paper: #1d2b25;
     --paper-2: #24352d;
-    --line: rgb(255 255 255 / 0.06);
-    --line-strong: rgb(255 255 255 / 0.16);
-    --margin: rgb(255 140 140 / 0.22);
+    --line: rgb(255 255 255 / 0.09);
+    --line-strong: rgb(255 255 255 / 0.28);
+    --margin: rgb(255 150 150 / 0.4);
     --ink: #f4f1e6;
     --soft: #b4c1b6;
-    --card: #2c4036;
-    --edge: #182520;
-    --track: rgb(255 255 255 / 0.1);
+    --card: #33493e;
+    --edge: #142019;
+    --track: rgb(255 255 255 / 0.15);
     --guide: rgb(255 255 255 / 0.42);
     --tomato: #ff8a6b;
     --sky: #6cc0ff;

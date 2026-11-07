@@ -17,4 +17,4 @@ export const shapes = (g: Glyph, cls: string): SVGElement[] => [
 
 /** Small static drawing of a glyph, for tiles and cards. */
 export const glyphSvg = (g: Glyph, cls: string): SVGSVGElement =>
-  s('svg', { viewBox: '0 0 100 100', class: `glyph ${cls}`, 'aria-hidden': 'true' }, ...shapes(g, 'ink'))
+  s('svg', { viewBox: '2 6 96 98', class: `glyph ${cls}`, 'aria-hidden': 'true' }, ...shapes(g, 'ink'))

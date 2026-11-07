@@ -3,7 +3,7 @@ import { icon, star } from '../ui/icons.ts'
 import { mascot } from '../ui/mascot.ts'
 
 const WORDS = { 1: 'You did it!', 2: 'Great job!', 3: 'Amazing!' } as const
-const CONFETTI = 18
+const CONFETTI = 24
 const HUES = ['--tomato', '--sun', '--leaf', '--sky', '--grape', '--pink'] as const
 
 /** One confetti star; positions come from the golden angle, so the burst is even, not random. */

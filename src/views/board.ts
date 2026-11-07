@@ -31,7 +31,7 @@ export function board(root: HTMLElement, set: CharSet, letter: Letter, glyph: Gl
     bar(href(set), h('span', { class: 'bar-letter', lang: set.lang, dir: set.dir }, glyph.char, letter.say.toLowerCase() === letter.char.toLowerCase() ? '' : h('small', {}, letter.say)),
       soundButton([set.lang], signal, speak)),
     forms(set, letter, glyph),
-    host,
+    h('div', { class: 'stage-wrap' }, host),
     h('nav', { class: 'controls', dir: set.dir },
       step(set, list[at - 1], 'Previous letter', 'back'),
       button('Show me', 'btn btn-big', () => (tr.reset(), void st.play()), signal, icon('play'), 'Show me'),
