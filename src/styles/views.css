@@ -173,7 +173,17 @@
 .bar-letter small {
   margin-inline-start: 0.45em;
   color: var(--soft);
-  font-size: 1.05rem;
+  font-size: 1.2rem;
+}
+
+/* Arabic letters run small at the same size, so the board title grows for them. */
+.bar-letter[lang='ar'] {
+  font-size: 2.9rem;
+  line-height: 1.2;
+}
+
+.bar-letter[lang='ar'] small {
+  font-size: 1.5rem;
 }
 
 .stage {
