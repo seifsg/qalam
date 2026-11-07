@@ -24,7 +24,7 @@ export default defineConfig({
     VitePWA({
       registerType: 'autoUpdate',
       injectRegister: 'script',
-      includeAssets: ['icon.svg', 'apple-touch-icon.png'],
+      includeManifestIcons: false,
       manifest: {
         name: 'Qalam: trace Arabic and English letters',
         short_name: 'Qalam',
@@ -44,8 +44,11 @@ export default defineConfig({
         ],
       },
       workbox: {
-        globPatterns: ['**/*.{js,css,html,svg,png,webmanifest}'],
+        globPatterns: ['**/*.{js,css,html,svg,png}'],
         cleanupOutdatedCaches: true,
+        // A new version takes over at once, so returning kids get updates on the next visit.
+        skipWaiting: true,
+        clientsClaim: true,
         navigateFallback: 'index.html',
       },
     }),
