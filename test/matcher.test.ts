@@ -83,11 +83,21 @@ test('lifting pauses: a touch where the finger stopped resumes', () => {
   press(t, [10, 50])
   along(t, 12, 50)
   const paused = t.i
-  assert.equal(press(t, [10, 50]), 'hint', 'cannot restart from the beginning mid-stroke')
+  assert.equal(press(t, [70, 50]), 'hint', 'a touch further along cannot skip ahead')
   assert.equal(press(t, [50, 51]), 'go')
   assert.ok(t.i >= paused)
   assert.equal(along(t, 52, 90), 'done')
   assert.equal(t.misses, 0)
+})
+
+test('after a lift, touching the start restarts the stroke with no miss', () => {
+  const t = start(line())
+  press(t, [10, 50])
+  along(t, 12, 50)
+  assert.equal(press(t, [10, 50]), 'go')
+  assert.equal(t.i, 0)
+  assert.equal(t.misses, 0)
+  assert.equal(along(t, 12, 90), 'done')
 })
 
 test('a dot passes on a tap near it', () => {

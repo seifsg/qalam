@@ -41,15 +41,16 @@ export function start(pts: readonly Pt[]): Trace {
   return { pts, r: pts.length === 1 ? RADIUS * 1.5 : RADIUS, i: -1, misses: 0 }
 }
 
-/** Finger down: it must land on the stroke start, or where a lifted finger paused. */
+/** Finger down: where a lifted finger paused resumes; the stroke start always restarts, no miss. */
 export function press(t: Trace, p: Pt): Press {
-  const from = Math.max(t.i, 0)
-  for (let j = Math.min(t.i + 1, last(t)); j >= from; j--) {
+  for (let j = Math.min(t.i + 1, last(t)); j >= Math.max(t.i, 0); j--) {
     if (!hits(t, j, p)) continue
     t.i = Math.max(t.i, j)
     return t.i === last(t) ? 'done' : 'go'
   }
-  return 'hint'
+  if (t.i <= 0 || !hits(t, 0, p)) return 'hint'
+  t.i = 0
+  return 'go'
 }
 
 /** Move to the nearest of the next few checkpoints if it is nearer than the current one. */
