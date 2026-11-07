@@ -3,8 +3,8 @@ import type { Pt } from '../types.ts'
 /** Checkpoint hit radius in glyph-box units: about a small fingertip on a phone. */
 export const RADIUS = 9
 /** Farther than this from the current segment = the finger left the path. */
-const OFF = RADIUS * 2
-/** A fast finger may skip this many checkpoints, never more (keeps order honest). */
+const OFF = RADIUS * 1.6
+/** How far along the stroke one step may look: enough to round a sharp corner, too few to skip a loop. */
 const AHEAD = 3
 
 /** One stroke being traced. `i` = last checkpoint reached, -1 = not started. */
@@ -49,15 +49,26 @@ export function press(t: Trace, p: Pt): Press {
   return 'hint'
 }
 
-/** Finger moves: advance to the farthest checkpoint in reach, or reset the stroke if off path. */
+/** Move to the nearest of the next few checkpoints if it is nearer than the current one. */
+function step(t: Trace, p: Pt): boolean {
+  let best = t.i
+  let near = d2(p, t.pts[t.i]!)
+  for (let j = t.i + 1; j <= Math.min(t.i + AHEAD, last(t)); j++) {
+    const d = d2(p, t.pts[j]!)
+    if (d < near) [best, near] = [j, d]
+  }
+  const moved = best > t.i
+  t.i = best
+  return moved
+}
+
+/**
+ * Finger moves: progress follows the finger along the stroke, through corners (V, W), turns and
+ * retraces (a, h, m, u), and never jumps ahead. Too far from the current segment resets the stroke.
+ */
 export function drag(t: Trace, p: Pt): Step {
   if (t.i < 0) throw new Error('Qalam: drag called before a successful press')
-  for (let j = Math.min(t.i + AHEAD, last(t)); j > t.i; j--) {
-    if (hits(t, j, p)) {
-      t.i = j
-      break
-    }
-  }
+  while (t.i < last(t) && step(t, p));
   if (t.i === last(t)) return 'done'
   if (segD2(p, t.pts[t.i]!, t.pts[t.i + 1]!) <= OFF * OFF) return 'ok'
   t.i = -1
