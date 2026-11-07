@@ -18,8 +18,8 @@ function render(): void {
   const route = parse(location.hash)
   app.replaceChildren()
   app.dataset.view = route.view
-  if (route.view === 'home') home(app)
-  else if (route.view === 'grid') grid(app, route.set)
+  if (route.view === 'home') home(app, screen.signal)
+  else if (route.view === 'grid') grid(app, route.set, screen.signal)
   else board(app, route.set, route.letter, route.glyph, screen.signal)
   document.title = route.view === 'board' ? `${route.letter.char} · Qalam` : 'Qalam'
   scrollTo(0, 0)

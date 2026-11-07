@@ -6,6 +6,8 @@ import { crayon, glyphSvg } from '../ui/glyph.ts'
 import { star } from '../ui/icons.ts'
 import { tally } from '../ui/marks.ts'
 import { mascot } from '../ui/mascot.ts'
+import { bar } from './bar.ts'
+import { soundButton } from './sound.ts'
 
 /** Big colourful card for one set, with a peek at its first letters. */
 function card(set: CharSet, n: number): HTMLAnchorElement {
@@ -18,8 +20,9 @@ function card(set: CharSet, n: number): HTMLAnchorElement {
 }
 
 /** Home: pick a script. */
-export function home(root: HTMLElement): void {
+export function home(root: HTMLElement, signal: AbortSignal): void {
   root.append(
+    bar(null, '', soundButton(['ar', 'en'], signal)),
     h('header', { class: 'hero' },
       mascot(),
       h('h1', { class: 'logo' }, 'Qalam', h('span', { class: 'logo-ar', lang: 'ar', dir: 'rtl' }, 'قلم')),

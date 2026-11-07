@@ -1,4 +1,5 @@
 import { href, order } from '../router.ts'
+import { say } from '../speech.ts'
 import { record } from '../store.ts'
 import { stars } from '../trace/matcher.ts'
 import type { CharSet, Glyph, Letter } from '../types.ts'
@@ -9,6 +10,7 @@ import { mascot, setMood } from '../ui/mascot.ts'
 import { bar } from './bar.ts'
 import { celebrate } from './celebrate.ts'
 import { forms } from './forms.ts'
+import { soundButton } from './sound.ts'
 import { stage } from './stage.ts'
 import { tracer } from './tracer.ts'
 
@@ -22,10 +24,12 @@ export function board(root: HTMLElement, set: CharSet, letter: Letter, glyph: Gl
   const at = list.indexOf(glyph)
   const next = list[at + 1]
   const pal = mascot()
+  const speak = (): void => say(letter.say, set.lang)
   const host = h('div', { class: 'stage' }, pal)
 
   root.append(
-    bar(href(set), h('span', { class: 'bar-letter', lang: set.lang, dir: set.dir }, glyph.char, letter.say === letter.char ? '' : h('small', {}, letter.say))),
+    bar(href(set), h('span', { class: 'bar-letter', lang: set.lang, dir: set.dir }, glyph.char, letter.say === letter.char ? '' : h('small', {}, letter.say)),
+      soundButton([set.lang], signal, speak)),
     forms(set, letter, glyph),
     host,
     h('nav', { class: 'controls', dir: set.dir },
@@ -43,8 +47,10 @@ export function board(root: HTMLElement, set: CharSet, letter: Letter, glyph: Gl
     const n = stars(misses)
     record(glyph.id, n)
     mood('happy')
+    speak()
     celebrate(root, n, next ? href(set, next) : href(set), set.dir, () => tr.reset(), signal)
   }
   const tr = tracer(st.svg, st.items, { ...st, miss: () => (st.miss(), mood('oops')) }, win, signal, st.stop)
   void st.play()
+  speak()
 }

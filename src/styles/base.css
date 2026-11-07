@@ -175,3 +175,11 @@ a:focus-visible {
   text-align: center;
   font: 900 1.7rem/1.1 var(--font);
 }
+
+.sound.mute {
+  opacity: 0.45;
+}
+
+.sound[aria-pressed='true'] {
+  color: var(--sky);
+}
