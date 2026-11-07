@@ -24,4 +24,5 @@ test('every stroke is a valid in-box path and every dot is in the box', () => {
 test('sets hold the full alphabets', () => {
   const count = Object.fromEntries(SETS.map((s) => [s.id, s.letters.length]))
   assert.equal(count.upper, 26)
+  assert.equal(count.lower, 26)
 })
