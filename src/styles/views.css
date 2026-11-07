@@ -10,13 +10,16 @@
 }
 
 .logo {
+  display: flex;
+  justify-content: center;
+  align-items: baseline;
+  gap: 0.3em;
   margin: 4px 0 0;
   font: 900 clamp(2.6rem, 10vw, 4.2rem) / 1 var(--font);
   letter-spacing: -0.02em;
 }
 
 .logo-ar {
-  margin-inline-start: 0.35em;
   color: var(--tomato);
 }
 
@@ -182,6 +185,7 @@
 }
 
 .paper {
+  -webkit-touch-callout: none;
   display: block;
   width: 100%;
   height: 100%;
